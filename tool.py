@@ -5,7 +5,6 @@ from PyQt6.QtWidgets import QApplication,QWidget,QPushButton,QLabel
 from data import data
 from command import comamnds
 import speech_recognition as sr
-from googlesearch import search
 from time import sleep
 import threading
 
@@ -27,11 +26,6 @@ class tool:
             StartUI.show()
         except Exception as E:
             print(f"Erro Al Inicar Interface, Erro: {E}")
-    
-    def google(promt):
-        for url in search(promt, num_results=5):
-            print(url)
-        return
     
     def start_command(promt):
         promt = str(promt)

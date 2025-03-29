@@ -24,19 +24,19 @@ class MainProgram(QWidget):
             SetingsBTN.clicked.connect(lambda: Setings.setings(app=app))
 
             StartBTN = Auto_Flow_UI.create_btn(screm= StartUI,txt="Start",X=140,Y=150,L= data.basicBtnLarge, A= data.basicBtnAltura)
-            StartBTN.clicked.connect(lambda: tool.start_tread(VoiceController.voice_command))
+            StartBTN.clicked.connect(lambda: tool.start_tread(VoiceController.run()))
 
             exitBTN = Auto_Flow_UI.create_btn(screm=StartUI,txt="Exit",X=140,Y = 200, L= data.basicBtnLarge, A= data.basicBtnAltura)
             exitBTN.clicked.connect(tool.exit_program)
-            #exitBTN.show()
+            exitBTN.show()
             StartUI.show()
         except Exception as E:
             print(f"Erro Al Inicar Interface, Erro: {E}")
             return
         app.exec()
 
-class VoiceController(QThread):
-    def voice_command():
+class VoiceController():
+    def run():
         rec = sr.Recognizer()   
         tool.clear_screen()
         print("Micrfone Started")
@@ -46,20 +46,17 @@ class VoiceController(QThread):
                     rec.adjust_for_ambient_noise(mic)
                     print("Waining Audio ")  
                     audio = rec.listen(mic)
+                    sleep(1)
                     command = rec.recognize_google(audio, language=data.languege)
                     if str(command).lower().strip() == "fechar":return
                     tool.start_command(command)
-                    print("Promt: "+ command)
+                print("Promt: "+ command)   
             except Exception as E:
                 print(f"Errro No Loop De Aldio, Erro: {E}")
-                VoiceController.voice_command()
+                VoiceController.run()
                 return
 
 if __name__ == "__main__":
-    Verify_tread = tool.start_tread(tool.verify_modules()).start()
-    #MainProgram.Start() #Satrt UI
-    #asyncio.run(VoiceController.voice_command())
-    #PyQt6_thread = tool.start_tread(MainProgram.Start()).start()
-    vocie_tread = tool.start_tread(VoiceController.voice_command()).start()
-
-
+    if not data.Debug:
+        Verify_tread = tool.start_tread(tool.verify_modules()).start()
+    MainProgram.Start()

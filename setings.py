@@ -10,8 +10,8 @@ class Setings(QWidget):
             
             title = Auto_Flow_UI.create_text(txt="Setings",x=170,y= 40,screm= setings_Window)
 
-           # Commands_Control_BTN = Auto_Flow_UI.create_btn(txt=" Comandos De Voz",X= 140 , Y=100 , A=data.basicBtnAltura,L=data.basicBtnLarge,screm= setings_Window)
-           # Commands_Control_BTN.clicked.connect(Setings.list_micro(setings_Window=setings_Window))
+            Commands_Control_BTN = Auto_Flow_UI.create_btn(txt=" Comandos De Voz",X= 140 , Y=100 , A=data.basicBtnAltura,L=data.basicBtnLarge,screm= setings_Window)
+            Commands_Control_BTN.clicked.connect(Setings.list_micro(setings_Window=setings_Window))
 
             Mircrofone_List_BTN = Auto_Flow_UI.create_btn(txt=" Comandos De Voz",X= 140 , Y=80 , A=data.basicBtnAltura,L=data.basicBtnLarge,screm= setings_Window)
 

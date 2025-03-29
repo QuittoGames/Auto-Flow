@@ -5,15 +5,16 @@ import os
 
 @dataclass
 class data:
+    Microfone_List_reported = []
+    Microfone_Open = True
+    languege = "pt-BR"
+    modules = ["SpeechRecognition","PyAudio"]
+    Debug = True
     resolutionX = 500
     resolutionY = 500
     basicBtnLarge = 200
     basicBtnAltura = 35
-    Font = r"fonts\\Font.ttf".strip()
-    Microfone_List_reported = []
-    Microfone_Open = True
-    languege = "pt-BR"
-    modules = ["PyQt6","SpeechRecognition","googlesearch-python","PyAudio"]
+
 
 class Auto_Flow_UI:
     def create_btn(screm, txt, X, Y, A, L):
