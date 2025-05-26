@@ -1,11 +1,12 @@
 import os
 import platform
 from dataclasses import dataclass
-from PyQt6.QtWidgets import QApplication,QWidget,QPushButton,QLabel
 from data import data
 from command import comamnds
 import speech_recognition as sr
-from googlesearch import search
+import subprocess
+import asyncio
+import sys
 from time import sleep
 import threading
 
@@ -17,21 +18,23 @@ class tool:
         else:
             os.system('clear')
 
-    def set_window():
+    async def verify_modules():
         try:
-            StartUI = QWidget()
-            StartUI.resize(data.resolutionX,data.resolutionY)
-            Title = QLabel("Auto Flow")
-            StartUI.setWindowTitle("Auto Flow")
-            Setings = QPushButton()
-            StartUI.show()
+            # #Uso Do modules por txt
+            req_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "modules", "requirements.txt"))
+            subprocess.run([sys.executable, "-m", "pip", "install", "-r", req_path], check=True)
+
+            #Teste De Novo metodo de instaçao de modulos
+            # for module in data.modules:
+            #     try:
+            #         __import__(module)
+            #     except ImportError:
+            #         subprocess.run([sys.executable, "-m", "pip", "install", module])
+            # return
+        
         except Exception as E:
-            print(f"Erro Al Inicar Interface, Erro: {E}")
-    
-    def google(promt):
-        for url in search(promt, num_results=5):
-            print(url)
-        return
+            print(f"Erro Na Verificaçao De Modulos, Erro: {E}")
+            return
     
     def start_command(promt):
         promt = str(promt)
@@ -50,18 +53,6 @@ class tool:
                     os.system("start" + " " + i["event"])
                 elif os.path.exists(i["event"]):
                     os.startfile(filepath=i["event"])
-
         return 
         
-    def start_tread(function):
-        tread = threading.Thread(target=function)
-        return tread
-    
-    def verify_modules():
-        for i in data.modules:
-            os.system(f"pip3 install {i}")
-            tool.clear_screen()
-        return
-    
-    def exit_program():
-        exit()
+    start_tread = lambda func: threading.Thread(target=func)
